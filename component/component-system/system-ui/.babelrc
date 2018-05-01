@@ -1,0 +1,17 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7"]
+      },
+      "modules ": false,
+      "debug": true
+    }],
+    "stage-2",
+    "react"
+  ],
+  "plugins": ["transform-react-jsx",["import", {
+    "libraryName": "antd",
+    "style": true
+  }]]
+}

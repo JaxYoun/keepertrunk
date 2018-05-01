@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>component-excel-import</artifactId>
+        <groupId>com.troy.keeper</groupId>
+        <version>0.0.6-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.troy.keeper</groupId>
+    <artifactId>excel-import-starter</artifactId>
+    <packaging>jar</packaging>
+    <name>Excel_Import_starter</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.troy.keeper</groupId>
+            <artifactId>excel-import</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- 单体引用依赖 start-->
+        <dependency>
+            <groupId>com.troy.keeper</groupId>
+            <artifactId>monomer-security</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.troy.keeper</groupId>
+            <artifactId>troy-keeper-monomer-parent</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <!-- 单体引用依赖 end-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <!-- optional=true,依赖不会传递，该项目依赖devtools；之后依赖myboot项目的项目如果想要使用devtools，需要重新引入 -->
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--fork :  如果没有该项配置，可能devtools不会起作用，即应用不会restart -->
+            </plugin>
+        </plugins>
+    </build>
+</project>

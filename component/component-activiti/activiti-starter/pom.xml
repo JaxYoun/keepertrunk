@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>component-activiti</artifactId>
+        <groupId>com.troy.keeper</groupId>
+        <version>0.0.6-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.troy.keeper</groupId>
+    <artifactId>activiti-starter</artifactId>
+    <packaging>jar</packaging>
+    <name>Activiti_starter</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.troy.keeper</groupId>
+            <artifactId>activiti</artifactId>
+            <version>${project.parent.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <groupId>mysql</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>troy-keeper-mysql</artifactId>
+                    <groupId>com.troy.keeper</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.troy.keeper</groupId>
+            <artifactId>monomer-security</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- 单体引用依赖 start-->
+        <dependency>
+            <groupId>com.troy.keeper</groupId>
+            <artifactId>troy-keeper-monomer-parent</artifactId>
+            <version>${project.parent.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <groupId>mysql</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>troy-keeper-mysql</artifactId>
+                    <groupId>com.troy.keeper</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.troy.keeper</groupId>
+            <artifactId>troy-keeper-oracle</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <!-- 单体引用依赖 end-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--fork :  如果没有该项配置，可能devtools不会起作用，即应用不会restart -->
+            </plugin>
+        </plugins>
+    </build>
+</project>

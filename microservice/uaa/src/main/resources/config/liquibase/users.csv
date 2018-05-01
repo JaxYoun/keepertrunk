@@ -1,0 +1,2 @@
+id;tenant_id;user_name;login_name;password;email;mobile;user_type;user_type_value;memo;created_by;last_updated_by
+1;1;admin;admin;$2a$10$BS/UGHDJQ/xiHgNSrxm0quVcf1l52KSSxeXEB38zDdKUYtW.Wo.xq;admin@localhost;;uaa.user.user_type;0;memo;system;system

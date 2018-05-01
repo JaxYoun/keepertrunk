@@ -1,0 +1,61 @@
+<div>
+    <h2>SSH公钥</h2>
+
+    <p>
+        这是存储在此服务器中的SSH公钥<code>&#126;/.ssh/id_rsa.pub</code>
+    </p>
+    <p>
+        使用此密钥来将访问含有Spring Cloud Configuration文件的Git存储库的权限授予此服务器
+    </p>
+
+    <h3>您的SSH公钥</h3>
+
+    <pre>{{vm.data}}</pre>
+    <hr>
+    <div class="text-center pad" >
+        <a ng-click="vm.showMore = !vm.showMore" class="btn btn-default"><span class="glyphicon glyphicon-circle-arrow-down"></span> 显示更多</a>
+    </div>
+	<div uib-collapse="vm.showMore">
+        <h3><span class="glyphicon glyphicon-info-sign"></span> 使用SSH与Docker</h3>
+        <p>
+            以下是使用JHipster Registry Docker映像的详细说明
+            <a href="https://hub.docker.com/r/jhipster/jhipster-registry/" target="_blank">jhipster/jhipster-registry/</a>.
+        </p>
+
+        <ul>
+            <li>登录容器内: <code>docker exec -it &lt;containerIdOrName&gt; sh</code></li>
+            <li>生成SSH密钥: <code>ssh-keygen</code></li>
+            <li>复制公钥 <code>/root/.ssh/id_rsa.pub</code> 到要访问的远程Git存储库
+                (在Github中，转到您的设置/ SSH密钥)</li>
+            <li>在容器内测试SSH连接是否正常工作：
+                <ul>
+                    <li>使用您的ssh密钥登录您的Git提供程序: <code>ssh -T git@github.com</code></li>
+                    <li>被要求将Git存储库主机添加到已知主机列表时，回复 <b>yes</b></li>
+                </ul>
+            </li>
+            <li>重新启动注册表而不删除容器，它应该能够读取由SSH保护的Git repo</li>
+        </ul>
+
+        <p>
+        为了不在每次重新创建或更新容器时丢失我们的设置，您可以挂载
+        <code>/root/.ssh/</code> 目录Docker volume.
+        </p>
+
+        <p>要设置自己的git repo，请编辑传递给您的容器的GIT_URI环境变量，例如使用Docker Compose:</p>
+        <div hljs hljs-language="yaml">
+    version: '2'
+      services:
+        jhipster-registry:
+          container_name: jhipster-registry
+          image: jhipster/jhipster-registry
+      volumes:
+        - ./ssh/:/root/.ssh/
+      environment:
+        - SPRING_PROFILES_ACTIVE=prod
+        - GIT_URI=git@github.com:jhipster/jhipster-registry.git
+        - GIT_SEARCH_PATHS=central-config
+      ports:
+        - 8761:8761
+        </div>
+	</div>
+</div>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>monomer</artifactId>
+        <groupId>com.troy.keeper</groupId>
+        <version>0.0.6-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>troy-keeper-monomer-api</artifactId>
+    <packaging>jar</packaging>
+    <name>Monomer-API</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.troy.keeper</groupId>
+            <artifactId>troy-keeper-common-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

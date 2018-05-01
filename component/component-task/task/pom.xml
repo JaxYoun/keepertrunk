@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>component-task</artifactId>
+        <groupId>com.troy.keeper</groupId>
+        <version>0.0.6-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.troy.keeper</groupId>
+    <artifactId>task</artifactId>
+    <packaging>jar</packaging>
+    <name>Task</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.troy.keeper</groupId>
+            <artifactId>troy-keeper-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+    </dependencies>
+</project>

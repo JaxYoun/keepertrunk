@@ -1,0 +1,47 @@
+<div>
+    <h2>配置</h2>
+
+    <span>过滤 (用前缀)</span> <input type="text" ng-model="filter" class="form-control">
+    <label ng-hide="filteredConfig.length == 0">Spring 配置</label>
+    <table class="table table-condensed table-striped table-bordered table-responsive"
+        style="table-layout:fixed" ng-hide="filteredConfig.length == 0">
+        <thead>
+        <tr>
+            <th ng-click="predicate = 'prefix'; reverse=!reverse" class="col-sm-4"><span>前缀</span></th>
+            <th class="col-sm-8">属性</th>
+        </tr>
+        </thead>
+
+        <tr ng-repeat="entry in filtered = (vm.configuration | filter:filter | orderBy:predicate:reverse)">
+            <td><span>{{entry.prefix}}</span></td>
+            <td>
+                <div class="row" ng-repeat="(key, value) in entry.properties">
+                    <div class="col-md-4">{{key}}</div>
+                    <div class="col-md-8">
+                        <span class="pull-right label label-default break">{{value}}</span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div ng-repeat="(key, value) in vm.allConfiguration">
+        <label ng-hide="filtered.length == 0"><span>{{key}}</span></label>
+        <table class="table table-condensed table-striped table-bordered table-responsive"
+               style="table-layout:fixed" ng-hide="filtered.length == 0">
+            <thead>
+            <tr>
+                <th class="col-sm-4">属性</th>
+                <th class="col-sm-8">值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in filtered = (value | filter:filter)">
+                <td class="break">{{item.key}}</td>
+                <td class="break">
+                    <span class="pull-right label label-default break">{{item.val}}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

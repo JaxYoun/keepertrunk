@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>troy-keeper-parent</artifactId>
+        <groupId>com.troy.keeper</groupId>
+        <version>0.0.6-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.troy.keeper</groupId>
+    <artifactId>monomer</artifactId>
+    <packaging>pom</packaging>
+    <name>Monomer</name>
+
+    <modules>
+        <module>troy-keeper-monomer-api</module>
+        <module>troy-keeper-monomer-parent</module>
+        <module>troy-keeper-monomer-security</module>
+        <module>troy-keeper-monomer-demo</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

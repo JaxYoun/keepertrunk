@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="number.type" value="bigint" dbms="mysql"/>
+    <property name="number.type" value="number(19,0)" dbms="oracle"/>
+    <!--
+        JHipster core tables.
+        The initial schema has the '00000000000001' id, so that it is over-written if we re-generate it.
+    -->
+    <changeSet id="00000000000001" author="admin">
+        <createTable tableName="buss_related_process">
+            <column name="id" type="${number.type}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="proc_inst_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="business_id" type="varchar(255)" >
+                <constraints nullable="false" />
+            </column>
+            <column name="business_no" type="varchar(255)" />
+            <column name="title" type="varchar(255)" />
+            <column name="business_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="${number.type}" />
+            <column name="created_by" type="varchar(255)" />
+            <column name="last_modified_date" type="${number.type}" />
+            <column name="last_modified_by" type="varchar(255)" />
+        </createTable>
+        <addUniqueConstraint
+                constraintName="unique_buss_related_process_1"
+                tableName="buss_related_process"
+                columnNames="business_id,business_type"/>
+        <addUniqueConstraint
+                constraintName="unique_buss_related_process_2"
+                tableName="buss_related_process"
+                columnNames="proc_inst_id"/>
+
+        <createTable tableName="task_claim_record">
+            <column name="id" type="${number.type}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="proc_inst_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="task_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <addUniqueConstraint
+                constraintName="unique_task_claim_record"
+                tableName="task_claim_record"
+                columnNames="proc_inst_id,task_id"/>
+
+        <createView viewName="v_todo_task" replaceIfExists="true">
+            select a_t.id_  as task_id,
+            a_t.proc_inst_id_,
+            a_t.proc_def_id_ ,
+            a_p.name_ as proc_def_name_,
+            a_p.version_,
+            a_p.category_,
+            a_p.deployment_id_,
+            a_t.task_def_key_,
+            a_t.name_ as task_def_name_,
+            a_t.assignee_,
+            a_t.create_time_,
+            a_t.due_date_,
+            a_t.delegation_,
+            a_t.description_,
+            b.business_id,
+            b.business_no,
+            b.business_type,
+            b.title,
+            b.created_by,
+            a_i.user_id_ as candidate_user_id,
+            a_i.group_id_ as candidate_group_id
+            from act_ru_task a_t
+            join act_re_procdef a_p on a_t.proc_def_id_ = a_p.id_
+            left join act_ru_identitylink a_i on a_i.task_id_ = a_t.id_ and a_i.task_id_ is not null and a_i.type_ = 'candidate'
+            left join buss_related_process b on a_t.proc_inst_id_ = b.proc_inst_id
+        </createView>
+
+        <createView viewName="v_history_task" replaceIfExists="true">
+            select ah_p.proc_inst_id_,
+            ah_p.proc_def_id_,
+            ah_p.start_time_,
+            ah_p.end_time_,
+            ah_p.duration_,
+            ar_p.name_ as proc_def_name_,
+            ar_p.version_,
+            ar_p.category_,
+            ar_p.deployment_id_,
+            ar_t.id_ as task_id,
+            ar_t.task_def_key_,
+            ar_t.name_ as task_def_name_,
+            ar_t.assignee_,
+            ar_t.due_date_,
+            ar_t.delegation_,
+            ar_t.description_,
+            b.business_id,
+            b.business_no,
+            b.business_type,
+            b.title,
+            b.created_by,
+            ah_i.user_id_ as participant_user_id
+            from act_hi_identitylink ah_i
+            join act_hi_procinst ah_p on ah_i.proc_inst_id_ = ah_p.proc_inst_id_
+            left join buss_related_process b on ah_p.proc_inst_id_ = b.proc_inst_id
+            left join act_re_procdef ar_p on ah_p.proc_def_id_ = ar_p.id_
+            left join act_ru_task ar_t on ah_p.proc_inst_id_ = ar_t.proc_inst_id_
+            where (ah_i.type_ = 'starter' or ah_i.type_ = 'participant')
+            and ah_i.proc_inst_id_ is not null
+        </createView>
+
+        <createSequence sequenceName="hibernate_sequence" minValue="1" maxValue="9999999999999999999999999999"
+                        cacheSize="20" startValue="1" incrementBy="1" />
+
+    </changeSet>
+
+</databaseChangeLog>

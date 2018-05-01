@@ -1,0 +1,53 @@
+<!-- Modal used to display the threads dump -->
+<div class="modal-header">
+    <button type="button" class="close" ng-click="vm.cancel()">&times;</button>
+    <h4 class="modal-title">Threads dump</h4>
+</div>
+<div class="modal-body pad">
+    <span class="label label-primary" ng-click="threadDumpFilter = {}">全部&nbsp;<span class="badge">{{vm.threadDumpAll}}</span></span>&nbsp;
+    <span class="label label-success" ng-click="threadDumpFilter = {threadState: 'RUNNABLE'}">可运行&nbsp;<span class="badge">{{vm.threadDumpRunnable}}</span></span>&nbsp;
+    <span class="label label-info" ng-click="threadDumpFilter = {threadState: 'WAITING'}">正在等待&nbsp;<span class="badge">{{vm.threadDumpWaiting}}</span></span>&nbsp;
+    <span class="label label-warning" ng-click="threadDumpFilter = {threadState: 'TIMED_WAITING'}">定时等待&nbsp;<span class="badge">{{vm.threadDumpTimedWaiting}}</span></span>&nbsp;
+    <span class="label label-danger" ng-click="threadDumpFilter = {threadState: 'BLOCKED'}">阻塞&nbsp;<span class="badge">{{vm.threadDumpBlocked}}</span></span>&nbsp;
+    <div class="voffset2">&nbsp;</div>
+    过滤
+    <input type="text" ng-model="threadDumpFilter" class="form-control">
+    <div class="row pad" ng-repeat="(k, v) in vm.threadDump | filter:threadDumpFilter">
+        <h5><span class="label" ng-class="vm.getLabelClass(v.threadState)">{{v.threadState}}</span>&nbsp;{{v.threadName}} (ID {{v.threadId}})
+            <a ng-click="show = !show">
+               <span ng-show="!show">显示堆栈跟踪</span>
+               <span ng-show="show">隐藏堆栈跟踪</span>
+            </a>
+        </h5>
+        <div class="well" ng-show="show">
+            <div ng-repeat="(stK, stV) in v.stackTrace">
+                {{stV.className}}.{{stV.methodName}}({{stV.fileName}}:{{stV.lineNumber}})
+                <span class="voffset1"></span>
+            </div>
+        </div>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th class="text-right">阻塞时间</th>
+                    <th class="text-right">阻塞计数</th>
+                    <th class="text-right">等待时间</th>
+                    <th class="text-right">等待计数</th>
+                    <th>锁名称</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{v.blockedTime}}</td>
+                    <td>{{v.blockedCount}}</td>
+                    <td>{{v.waitedTime}}</td>
+                    <td>{{v.waitedCount}}</td>
+                    <td>{{v.lockName}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default  pull-left" data-dismiss="modal" ng-click="vm.cancel()">完成</button>
+</div>
